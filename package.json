@@ -5,6 +5,7 @@
   "main": "test.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "preinstall": "git init; git submodule add https://github.com/dtschump/CImg.git",
     "install": "node-gyp rebuild"
   },
   "repository": {
