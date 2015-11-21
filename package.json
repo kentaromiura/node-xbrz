@@ -1,0 +1,21 @@
+{
+  "name": "node-xbrz",
+  "version": "1.0.0",
+  "description": "a node binding to the xbrz resize algorithm",
+  "main": "test.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "install": "node-gyp rebuild"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kentaromiura/node-xbrz.git"
+  },
+  "author": "Cristian Carlesso <@kentaromiura>",
+  "license": "GPL-3.0",
+  "gypfile": true,
+  "bugs": {
+    "url": "https://github.com/kentaromiura/node-xbrz/issues"
+  },
+  "homepage": "https://github.com/kentaromiura/node-xbrz#readme"
+}
