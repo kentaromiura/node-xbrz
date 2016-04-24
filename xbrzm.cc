@@ -83,13 +83,13 @@ void resize(const FunctionCallbackInfo<Value>& args) {
 
   uint32_t* p_raw = new uint32_t[width * height];
   // RGBA to ARGB
-  for(uint32_t x = 0; x < (uint32_t)width; x++) {
-    for(uint32_t y = 0; y < (uint32_t)height; y++) {
-      uint32_t r = image(x, y, 0, 0);
-      uint32_t g = image(x, y, 0, 1);
-      uint32_t b = image(x, y, 0, 2);
-      uint32_t a = image(x, y, 0, 3);
-      if (!isRGBA) a = 0;
+  for(uint32_t y = 0; y < (uint32_t)width; y++) {
+    for(uint32_t x = 0; x < (uint32_t)height; x++) {
+      uint32_t r = image(y, x, 0, 0);
+      uint32_t g = image(y, x, 0, 1);
+      uint32_t b = image(y, x, 0, 2);
+      uint32_t a = 0;
+      if (isRGBA) a = image(y, x, 0, 3);
       p_raw[x*width + y] = (a << 24) | (r << 16) | (g << 8) | b;
     }
   }
@@ -110,15 +110,14 @@ void resize(const FunctionCallbackInfo<Value>& args) {
   CImg<uint32_t> output(width * scale, height * scale, depth, spectrum);
 
   // ARGB to RGBA
-  for(uint32_t x = 0; x < (uint32_t)output.width(); x++) {
-    for(uint32_t y = 0; y < (uint32_t)output.height(); y++) {
+  for(uint32_t y = 0; y < (uint32_t)output.width(); y++) {
+    for(uint32_t x = 0; x < (uint32_t)output.height(); x++) {
       uint32_t pixel = p_output[x * width * scale +  y];
 
-      /* R */ output(x, y, 0) = getByte<2>(pixel);
-      /* G */ output(x, y, 1) = getByte<1>(pixel);
-      /* B */ output(x, y, 2) = getByte<0>(pixel);
-      /* A */ if (isRGBA) output(x, y, 3) = getByte<3>(pixel);
-
+      /* R */ output(y, x, 0) = getByte<2>(pixel);
+      /* G */ output(y, x, 1) = getByte<1>(pixel);
+      /* B */ output(y, x, 2) = getByte<0>(pixel);
+      /* A */ if (isRGBA) output(y, x, 3) = getByte<3>(pixel);
     }
   }
   delete[] p_output;
